@@ -23,6 +23,7 @@
     "@clr/ui": "^17.9.0",
     "@ngrx/operators": "^19.2.0",
     "@ngrx/signals": "^19.2.0",
+    "lodash": "^4.17.21",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

@@ -7,7 +7,7 @@ import { getState, patchState, signalStore, watchState, withComputed, withHooks,
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { tapResponse } from '@ngrx/operators';
 import { withRequestStatus } from './user.store.features';
-import { addEntity, removeEntities, updateAllEntities, withEntities } from '@ngrx/signals/entities';
+import { addEntity, removeEntities, withEntities } from '@ngrx/signals/entities';
 import { IActionResponse } from '../model/app.model';
 
 interface IUserState {
@@ -15,7 +15,6 @@ interface IUserState {
     currentUser: IUser | null;
     userStatus: 'active' | 'offline' | null;
     isLoading?: boolean;
-    
 }
 
 const initialUserState: IUserState = {
@@ -36,27 +35,15 @@ export const UserStore = signalStore(
     })),
     
     withProps(() => ({
-        userService: inject(UserServiceBaseService),
+        _userService: inject(UserServiceBaseService),
     })),
-
-    withHooks({
-        onInit(store) {
-            watchState(store, (state) => {
-                console.log('[watchState] counter state', state);
-            });
-            
-            effect(() => {
-                console.log('[effect] counter state', getState(store));
-            });
-        },
-    }),
 
     withMethods((store) => ({
         fetchCurrentUser: rxMethod<void>(
             pipe(
                 tap(() => patchState(store, { isLoading: true, requestStatus: 'pending' })),
                 switchMap(() => {
-                    return store.userService.fetchCurrentUser().pipe(
+                    return store._userService.fetchCurrentUser().pipe(
                         tapResponse({
                             next: (actionResponse: IActionResponse<IUser | any>) => {
 
@@ -68,8 +55,6 @@ export const UserStore = signalStore(
                                         isLoading: false,
                                         requestStatus: 'fulfilled'
                                     });
-
-                                    patchState(store, );
                                 }
                                 else
                                 {
@@ -91,7 +76,7 @@ export const UserStore = signalStore(
             pipe(
                 tap(() => patchState(store, { isLoading: true })),
                 switchMap((input) => {
-                    return store.userService.updateCurrentUser({ displayName: input }).pipe(
+                    return store._userService.updateCurrentUser({ displayName: input }).pipe(
                         tapResponse({
                             next: (actionResponse) => {
 
@@ -126,5 +111,24 @@ export const UserStore = signalStore(
             patchState(store, removeEntities(({ displayName }) => displayName.at(0) === 'A' ));
         },
         
-    }))
+    })),
+    
+    withHooks((store) => {
+
+        return {
+            onInit()
+            {
+                store.fetchCurrentUser();
+
+                watchState(store, (state) => {
+                    console.log('[watchState] counter state', state);
+                });
+                
+                effect(() => {
+                    console.log('[effect] counter state', getState(store));
+                });
+            },
+        };
+        
+    }),
 );

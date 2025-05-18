@@ -27,18 +27,17 @@ import { UserServiceBaseService } from '../user-service-base.service';
 })
 export class PushSignalsComponent implements OnInit
 {
-
     userStore = inject(UserStore);
 
-    constructor(
-    )
+    constructor()
     {
-        this.userStore.fetchCurrentUser();
+        // this.userStore.fetchCurrentUser();
 
         this.userStore.error();
     }
 
-    ngOnInit(): void {
+    ngOnInit(): void
+    {
         console.log('PushSignalsComponent OnInit');
     }
 
