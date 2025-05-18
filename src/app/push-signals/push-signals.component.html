@@ -1,0 +1,48 @@
+<div class="main-container">
+
+    <header class="header-6">
+        <div class="branding">
+          <a href="javascript://">
+            <cds-icon shape="bolt"></cds-icon>
+            <span class="title">Push vs Pull Architecture</span>
+          </a>
+        </div>
+
+        <div class="header-actions">
+
+            <a href="javascript://" class="nav-link nav-icon" title="Settings" aria-label="settings">
+                <cds-icon shape="cog"></cds-icon>
+            </a>
+
+            <clr-dropdown>
+                <button class="nav-text" clrDropdownTrigger aria-label="open user profile">
+                  {{ userStore.currentUser()?.email }}
+                  <cds-icon shape="angle" direction="down"></cds-icon>
+                </button>
+                <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+                  <button clrDropdownItem (click)="changeName()">Change Name</button>
+                </clr-dropdown-menu>
+            </clr-dropdown>
+        </div>
+
+      </header>
+
+      <app-subnav></app-subnav>
+
+
+    <div class="content-container">
+
+        <div class="content-area">
+
+            <div class="content-wrap">
+
+               <app-dashboard></app-dashboard>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>

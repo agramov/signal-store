@@ -1,0 +1,14 @@
+:host {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+
+    app-filter {
+        min-width: 20%;
+    }
+
+    .datagrid-wrap {
+        flex-grow: 1;
+    }
+}

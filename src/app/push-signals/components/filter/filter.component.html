@@ -1,0 +1,20 @@
+<section>
+
+    <h5>Filters</h5>
+
+    <hr>
+
+    <ul>
+        @for (option of filtersOptions; track $index) {
+            <li>
+                <cds-checkbox>
+                    <label>{{ option.key }}</label>
+                    <input type="checkbox"
+                        (change)="handleFilterClick(option)"
+                        >
+                </cds-checkbox>
+            </li>
+        }
+    </ul>
+
+</section>

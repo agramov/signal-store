@@ -1,0 +1,24 @@
+<app-filter (filterSelection)="handleFilterSelection($event)"></app-filter>
+
+<div class="datagrid-wrap">
+
+    <div class="clr-form-control">
+        <label for="basic" class="clr-control-label">Search</label>
+        <div class="clr-control-container">
+            <div class="clr-input-wrapper">
+                <input type="text"
+                    id="basic"
+                    placeholder='Type and press "Enter"'
+                    class="clr-input"
+                    (onkey.enter)="onSearch($event)"
+                    (change)="onSearch($event)"
+                />
+                <cds-icon class="clr-validate-icon" shape="exclamation-circle"></cds-icon>
+            </div>
+        </div>
+    </div>
+
+    <app-user-grid>
+    </app-user-grid>
+
+</div>
